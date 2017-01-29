@@ -6,7 +6,17 @@
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
   header("Location: sign-up.php");
- }
+ }else {
+        $now = time(); // Checking the time now when home page starts.
+
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header('Location: sign-up.php');
+        }
+        else { //Starting this else one [else1]
+
+
+
   function db_query($query){ 
    $connection = db_connect();
    $result = mysqli_query($connection,$query);
@@ -24,6 +34,8 @@
  // select loggedin users detail
  // $res=mysql_query("SELECT * FROM users WHERE userUsername=".$_SESSION['user']);
  // $userRow=mysql_fetch_array($res);
+  }
+}
 ?>
 
 
