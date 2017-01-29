@@ -196,6 +196,8 @@ if ( isset($_SESSION['user'])) {
 </head>
 
 <body>
+<div class="container">
+  <header><img src="images/skill102.jpg" alt="company logo" class="img-rounded img-responsive" height="100" width=""><h3><a>Welcome To Peculiar Concepts International <em>Skils Acquisition Website</em></h3></a></header>
   <div class="login-wrap">
 	<div class="login-html">
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
@@ -268,6 +270,7 @@ if ( isset($_SESSION['user'])) {
 			</div>
 		</div>
 	</div>
+</div>
 </div>
   
   <script src="js/bootstrap.js"></script>
