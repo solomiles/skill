@@ -28,6 +28,7 @@
     $result = db_query("SELECT * FROM users WHERE Username = '$id'");
 
     $row = mysqli_fetch_array($result);
+    $name = $row['Profilepic'];
 
     // $display = $row['Profilepic'];
     // $descrip = $row['Description'];
@@ -47,7 +48,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title><?php echo $title; ?></title>
-    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/skill102.jpg" type="image/x-icon" />
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"> -->
@@ -67,7 +68,7 @@
         background: #fff;
       }
       .navbar-default {
-        background-color: #fff;
+        background-color: #010;
         border-color: rgba(249, 244, 244, 0.03);
       }
       h3,h4,h6,h5 {
@@ -86,6 +87,12 @@
       .carousel-inner > .item > a > img {
         width: 120%;
         margin: auto; 
+      }
+       .pics {
+        height: 45px;
+        width: 40px;
+        border: 1px solid;
+        border-radius: 50%;
       }
     </style>
    
@@ -116,7 +123,7 @@
                   <li><a href="about-us.php" data-toggle="tooltip" data-placement='bottom' title="About Us">About Us</a></li>
                 </ul>
               </li>
-              <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
+              <li><a href="profile.php" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Aquisition<span class="caret"></span></a>
@@ -128,9 +135,10 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" style="font-size: 17px;">
-              <li><a href="contact-us.php" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li>              
+              <li><a href="contact-us.php" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li> 
+              <li><span><img src="images/users/<?php echo $name; ?>" class=" pics img-responsive" alt="profile picture"></span>  </li>          
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><?php echo $id; ?><span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $id; ?><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="logout.php" data-toggle="tooltip" data-placement='bottom' title="Logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>
                 </ul>

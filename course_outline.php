@@ -6,7 +6,14 @@
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
   header("Location: index.php");
- }
+ }else {
+        $now = time(); // Checking the time now when home page starts.
+
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header('Location: sign-up.php');
+        }
+        else { //Starting this else one [else1]
   function db_query($query){ 
    $connection = db_connect();
    $result = mysqli_query($connection,$query);
@@ -19,8 +26,9 @@
     $result = db_query("SELECT * FROM users WHERE Username = '$id'");
 
     $row = mysqli_fetch_array($result);
-
-    // $display = $row['Profilepic'];
+    $name = $row['Profilepic'];
+  }
+}    // $display = $row['Profilepic'];
     // $descrip = $row['Description'];
  
  // $res=mysql_query("SELECT * FROM users WHERE userUsername=".$_SESSION['user']);
@@ -36,7 +44,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title><?php echo $title; ?></title>
-    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/skill102.jpg" type="image/x-icon" />
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"> -->
@@ -45,6 +53,7 @@
     <!-- <link href="css/solomonproject.min.css" rel="stylesheet" type="text/css"> -->
     
     <link rel="stylesheet" type="text/css" href="css/friendzone.css">
+    
 
     <style type="text/css">
       body {
@@ -56,7 +65,7 @@
         background: #fff;
       }
       .navbar-default {
-        background-color: #fff;
+        background-color: #010;
         border-color: rgba(249, 244, 244, 0.03);
       }
       .carousel-inner > .item > img,
@@ -83,13 +92,27 @@
       .bod {
       position: relative;
       }
-      ul.nav-pills {
+      ul.nav-list {
       
       position: fixed;
       }
       div.col-sm-9 div {
           height: auto;
           font-size: 18px;
+      }
+       nav> a {
+        background:#FAF7FA;
+        color: #A76AD9;
+      }
+      nav .nav-list>.active>a{
+        background: #010;
+      }
+      nav .nav-list>.active>a:hover {
+        background:#A146C2;
+      }
+      nav .nav a:hover{
+        color:#DDBFF5;
+        background-color: #F7EDFA;
       }
       #section1 ,#section6 {color: #fff; background-color: #1E88E5; padding-left: 10px; padding-top: 10px;}
       #section2 ,#section7 {color: #fff; background-color: #673ab7; padding-left: 10px; padding-top: 10px;}
@@ -101,6 +124,12 @@
         #section1, #section2, #section3, #section4, #section5, #section6, #section7, #section8, #section9, #section10  {
           margin-left: 50px;
         }
+      }
+      .pics {
+        height: 45px;
+        width: 40px;
+        border: 1px solid;
+        border-radius: 50%;
       }
     </style>
    
@@ -131,7 +160,7 @@
                   <li><a href="about-us.php" data-toggle="tooltip" data-placement='bottom' title="About Us">About Us</a></li>
                 </ul>
               </li>
-              <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
+              <li><a href="profile.php" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
               <li class="dropdown active">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Aquisition<span class="caret"></span></a>
@@ -143,9 +172,10 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" style="font-size: 17px;">
-              <li><a href="contact-us.php" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li>              
+              <li><a href="contact-us.php" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li> 
+              <li><span><img src="images/users/<?php echo $name; ?>" class=" pics img-responsive" alt="profile picture"></span>  </li>          
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><?php echo $id; ?><span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $id; ?><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="logout.php" data-toggle="tooltip" data-placement='bottom' title="Logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>
                 </ul>
@@ -169,7 +199,7 @@
                   <li><a href="about-us.php">About us</a></li>
                 </ul>
               </li>
-              <li><a href="#">Profile</a></li>
+              <li><a href="profile.php">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
               <li class="dropdown" style="background: rgb(233, 239, 236) none repeat scroll 0% 0%;"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Acquisition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
                 <ul class="dropdown-menu">
@@ -195,8 +225,8 @@
                 <div class="">
                   <div class="row">
                     <nav class="col-sm-4" id="myScrollspy">
-                      <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="#section1" data-toggle="tooltip" data-placement='bottom' title="Bridal Makeover">Bridal Makeover</a></li>
+                      <ul class="nav nav-list ">
+                        <li class=""><a href="#section1" data-toggle="tooltip" data-placement='bottom' title="Bridal Makeover">Bridal Makeover</a></li>
                         <li><a href="#section2" data-toggle="tooltip" data-placement='bottom' title="Ankara Craft">Ankara Craft</a></li>
                         <li><a href="#section3" data-toggle="tooltip" data-placement='bottom' title="Soap Making">Soap Making</a></li>
                         <li><a href="#section4" data-toggle="tooltip" data-placement='bottom' title="Bead Making">Bead Making</a></li>

@@ -168,3 +168,34 @@ li.dropdown {
   font-size: 22px;
   
 }
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+}
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+  color: green;
+  background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+  color: #010101;
+  background-color: #fff;
+}
+.navbar-default .navbar-brand {
+  color: #fff;
+}
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+  color: green;
+  background-color: transparent;
+}
+.pics {
+  height: 45px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 50%;
+}
+h3,h4,h6,h5 {
+  color: #777;
+}
+header {
+  margin-top: 10px;
+  background: #fff;
+}

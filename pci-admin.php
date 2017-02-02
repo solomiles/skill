@@ -134,7 +134,7 @@ if ( isset($_SESSION['user'])) {
     $row = mysqli_fetch_array($result);
     $_SESSION['admin'] = $row['Username'];
     $_SESSION['start'] = time();//taking login time
-    $_SESSION['expire'] = $_SESSION['start'] + (2 * 60);//ending the session in 2
+    $_SESSION['expire'] = $_SESSION['start'] + (10 * 60);//ending the session in 2
     // if ($row['Admin'] == 1) {
     //   header('location: admin.php');
     // } else {
@@ -159,12 +159,15 @@ if ( isset($_SESSION['user'])) {
 <head>
   <meta charset="UTF-8">
   <title><?php echo $title; ?> </title>
+  <link rel="shortcut icon" href="images/skill102.jpg" type="image/x-icon" />
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:600'>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+  <div class="container">
+  <header><img src="images/skill102.jpg" alt="company logo" class="img-rounded img-responsive" height="100" width=""><h3><a>Welcome To Peculiar Concepts International <em>Skils Acquisition Website</em></h3></a></header>
   <div class="login-wrap">
 	<div class="login-html"><h2 style="color: red;">Admin Login !!! out of bound</h2>
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>

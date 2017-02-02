@@ -4,11 +4,18 @@
  include_once 'dbconnect.php';
   $title = 'Admin | PECULIAR CONCEPTS INTERNATIONAL';
   $saved = "";
+  $error = false;
  // if session is not set this will redirect to login page
  if($_SESSION['admin']=="" ) {
   header("Location: pci-admin.php");
- }
-  function db_query($query){ 
+ } else {
+    $now = time();
+    if ($now > $_SESSION['expire']) {
+      session_destroy();
+      header('Location: pci-admin.php');
+    }
+    else {
+      function db_query($query){ 
    $connection = db_connect();
    $result = mysqli_query($connection,$query);
     return $result;
@@ -16,9 +23,63 @@
 // select loggedin users detail
     $id = $_SESSION['admin'];
 
-    $result = db_query("SELECT * FROM users WHERE Username = '$id'");
+    // $courses = '1';
+    // $result = db_query("SELECT * FROM courses WHERE name = '$id'");
 
-    $row = mysqli_fetch_array($result);
+    // $row = mysqli_fetch_array($result);
+
+    
+    }
+  }
+  
+
+  if (isset($_POST['btn-send'])) {
+      # code...
+      $courses = trim($_POST['courses']);
+      $courses = strip_tags($courses);
+      $courses = htmlspecialchars($courses);
+
+      $amount = trim($_POST['amount']);
+      $amount = strip_tags($amount);
+      $amount = htmlspecialchars($amount);
+
+      $date = trim($_POST['date']);
+      $date = strip_tags($date);
+      $date = htmlspecialchars($date);
+
+      if (empty($courses)) {
+       $error = true;
+       $saved = "Please select a course.";
+      } 
+
+      if (empty($amount)) {
+       $error = true;
+       $saved = "Please set amount.";
+      } 
+
+      if (empty($date)) {
+       $error = true;
+       $saved = "Please set date.";
+      } 
+
+      $result = db_query("UPDATE courses SET Name = '$courses', Amount = '$amount', Dates = '$date' WHERE Name = '$courses'");
+      // ("INSERT INTO courses(Name,Amount,Dates) VALUES('$courses','$amount','$date')");
+
+      // $row = mysqli_fetch_array($result);
+
+      // echo $row;
+      // exit();
+
+      if ($result == 1) {
+        # code...
+        $saved = 'Courses Set Successful';
+      } else {
+
+        $saved = 'Courses Set Unsuccessful';
+      }
+
+    }
+
 
 
     // $display = $row['Profilepic'];
@@ -36,7 +97,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title><?php echo $title; ?></title>
-    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/skill102.jpg" type="image/x-icon" />
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"> -->
@@ -56,7 +117,7 @@
         background: #fff;
       }
       .navbar-default {
-        background-color: #fff;
+        background-color: #010;
         border-color: rgba(249, 244, 244, 0.03);
       }
       .carousel-inner > .item > img,
@@ -78,6 +139,12 @@
         display: block;
         max-width: 100%;
         height: 100px;
+      }
+      .pics {
+        height: 45px;
+        width: 40px;
+        border: 1px solid;
+        border-radius: 50%;
       }
     </style>
    
@@ -169,14 +236,14 @@
           <div class="col-md-12">
             <div class="well">
               <h3>Peculiar Concepts ADMIN Page</h3>
-              <div class="alert alert-danger alert-dismissable">WARNING!!! Please Make Sure You Understand What you Are To Do</div><hr>
+              <div class="alert alert-danger alert-dismissable">WARNING!!! Please Make Sure You Understand What you Are To Do<?php echo $saved; ?></div><hr>
               
                 <div class="">
                   <h5><strong>Edit Courses</strong></h5>
                 </div><br>
                 <p class="alert-success"><?php echo $saved; ?></p>
                 
-                <form class="form-horizontal" role="form" action="" name="upload" method="">
+                <form class="form-horizontal" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="upload" method="post">
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Select Course:</label>
                     <div class="col-lg-8">
@@ -198,13 +265,13 @@
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Set amount:</label>
                     <div class="col-lg-8">
-                      <input class="form-control" type="text" name="email" placeholder="set amount" >
+                      <input class="form-control" type="text" name="amount" placeholder="set amount" >
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Set Date:</label>
                     <div class="hero-unit col-lg-8 ">
-                      <input class="form-control" id="example1" type="text" >
+                      <input class="form-control" id="example1" name="date" type="text" >
                     </div>
                   </div>
                   <!-- <div class="form-group">
@@ -216,7 +283,7 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label"></label>
                     <div class="col-md-8">
-                      <button type="submit" name="btn-send" class="btn btn-primary btn-lg" value="Send">Save</button>
+                      <button type="submit" name="btn-send" class="btn btn-primary btn-lg">Save</button>
                     </div>
                   </div>
                 </form>

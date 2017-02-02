@@ -81,7 +81,7 @@ if ( isset($_SESSION['user'])) {
    $regemailError = "Please enter valid email address.";
   } else {
    // check email exist or not
-   $query = "SELECT userEmail FROM users WHERE userEmail='$regemail'";
+   $query = "SELECT Email FROM users WHERE Email='$regemail'";
    $result = db_query($query);
    $count = db_query_num_rows($result);
    if($count!=0){
@@ -165,7 +165,7 @@ if ( isset($_SESSION['user'])) {
     $row = mysqli_fetch_array($result);
     $_SESSION['user'] = $row['Username'];
     $_SESSION['start'] = time();//taking login time
-    $_SESSION['expire'] = $_SESSION['start'] + (2 * 60);//ending the session in 2
+    $_SESSION['expire'] = $_SESSION['start'] + (15 * 60);//ending the session in 2
     // if ($row['Admin'] == 1) {
     //   header('location: admin.php');
     // } else {
@@ -190,6 +190,7 @@ if ( isset($_SESSION['user'])) {
 <head>
   <meta charset="UTF-8">
   <title><?php echo $title; ?> </title>
+  <link rel="shortcut icon" href="images/skill102.jpg" type="image/x-icon" />
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:600'>
   <link rel="stylesheet" href="css/style.css">
@@ -197,11 +198,11 @@ if ( isset($_SESSION['user'])) {
 
 <body>
 <div class="container">
-  <header><img src="images/skill102.jpg" alt="company logo" class="img-rounded img-responsive" height="100" width=""><h3><a>Welcome To Peculiar Concepts International <em>Skils Acquisition Website</em></h3></a></header>
+  <header><img src="images/skill102.jpg" alt="company logo" class="img-rounded img-responsive" height="100" width=""><h3><a href="">Welcome To Peculiar Concepts International <em>Skils Acquisition Website</em></h3></a></header><br>
   <div class="login-wrap">
-	<div class="login-html">
+	<div class="login-html"><p style="color: #ECFFFF;">Don't have an account? <label for="tab-2" style="color: red;"> Sign Up now!</a></p>
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"> &nbsp;Sign Up</label>
 		<div class="login-form">
 			<div class="sign-in-htm">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">

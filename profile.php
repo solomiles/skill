@@ -2,7 +2,7 @@
  ob_start();
  session_start();
  include_once 'dbconnect.php';
-  $title = 'Contact-us | PECULIAR CONCEPTS INTERNATIONAL';
+  $title = 'Profile | PECULIAR CONCEPTS INTERNATIONAL';
   $delivery = "";
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
@@ -26,30 +26,110 @@
     $result = db_query("SELECT * FROM users WHERE Username = '$id'");
 
     $row = mysqli_fetch_array($result);
-    $name = $row['Profilepic'];
 
-    // ini_set( 'sendmail_from', "osaighesolomon.com" ); // My usual e-mail address
-    // ini_set( 'SMTP', "smtp.gmail.com" ); // My usual sender
-    // ini_set( 'smtp_port', "465" );
+   $fname = $row['Name'];
+  $email = $row['Email'];
+  $description = $row['Description'];
+  $phone = $row['Phone'];
+  $errMSG='';
+
+//  if(isset($_POST['upload'])) {
+//   $regfullname = $_POST['fullname'];
+//   $regemail  = $_POST['email'];
+//   $description   = $_POST['description'];
+//   $phone = $_POST['phone'];
+// }
+if( isset($_POST['btn-update']) ) {
+  
+
+
+ $fullname = trim($_POST['fullname']);
+  $fullname = strip_tags($fullname);
+  $fullname = htmlspecialchars($fullname);
+  
+  $email = trim($_POST['email']);
+  $email = strip_tags($email);
+  $email = htmlspecialchars($email);
+  
+  $description = trim($_POST['description']);
+  $description = strip_tags($description);
+  $description = htmlspecialchars($description);
+  
+  $phone = trim($_POST['phone']);
+  $phone = strip_tags($phone);
+  $phone = htmlspecialchars($phone);
+  
+
+          // $username = $object['username'];
+          // $fname  = $object['fullname'];
+          // $email  = $object['email'];
+          // $descrip  = $object['description'];
+          // $phone  = $object['phone'];
+        
+
+  $result = db_query("UPDATE users SET Name = '$fullname', Email = '$email', Description = '$description', Phone = '$phone'  WHERE Username = '$id'");
+  if ($result == 1) {
+    $errMSG = " Records Updated!";
+  }
+  else {
+    $errMSG = "Something went wrong, try again later..."; 
+  } 
+}
+
+
+$id = $_SESSION['user'];
+
+$result = db_query("SELECT * FROM users WHERE Username = '$id'");
+
+$row = mysqli_fetch_array($result);
+
+$display = $row['Profilepic'];
+
+if(isset($_POST['Submit'])){
+        $id = $_SESSION['user'];
+        $name = $_FILES["image"] ["name"];
+        $type = $_FILES["image"] ["type"];
+        $size = $_FILES["image"] ["size"];
+        $temp = $_FILES["image"] ["tmp_name"];
+        $error = $_FILES["image"] ["error"];
+        $path = 'images/users/'. $name;
+
+
+       
+
+        if ($error > 0){
+            die("Error uploading file! Code $error.");
+        }else{
+            if($size > 10000000) //conditions for the file
+            {
+            die("Format is not allowed or file size is too big!");
+            }
+            else
+            {
+            move_uploaded_file($temp, $path);
+
+            $result =  db_query("UPDATE users SET Profilepic = '$name' WHERE Username = '$id'");
+            }
+            
+        } 
+        // if ($result == 1) {
+        //   # code... 
+        //   $row = mysqli_fetch_array($result);
+        //   $display = $row['Profilepic'];
+
+        // }
+
+          
+      }
+      
+//
+      if (isset($_POST['btn-reset'])) {
+        # code...
+        header('Location: index.php');
+      }
+
   }
 }
-  if(isset($_POST['btn-send'])){
-    $to = "osaighesolomon@gmail.com"; // this is your Email address
-    $from = $_POST['email']; // this is the sender's Email address
-    $fullname = $_POST['fullname'];
-    $email = $_POST['email'];
-    $subject = $_POST['subject'];
-    $subject2 = "Your Copy of your" . $_POST['subject'];
-    $message = $fullname . " " . " wrote the following:" . "\n\n" . $_POST['message'];
-    $message2 = "Here is a copy of your message " . $fullname . "\n\n" . $_POST['message'];
-
-    $headers = "From:" . $from;
-    $headers2 = "From:" . $to;
-    mail($to,$subject,$message,$headers);
-    mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
-    $delivery = "Mail Sent. Thank you " . $fullname . ", we will contact you shortly.";
-    // You can also use header('Location: thank_you.php'); to redirect to another page.
-    }
 
     // $display = $row['Profilepic'];
     // $descrip = $row['Description'];
@@ -97,7 +177,7 @@
       .well {
         background-color: #fff;
       }
-      h4,h6,h5 {
+      h3,h4,h6,h5 {
         color: #777;
       }
       header {
@@ -115,6 +195,7 @@
         border: 1px solid;
         border-radius: 50%;
       }
+
     </style>
    
   </head>
@@ -144,7 +225,7 @@
                   <li><a href="about-us.php" data-toggle="tooltip" data-placement='bottom' title="About Us">About Us</a></li>
                 </ul>
               </li>
-              <li><a href="profile.php" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
+              <li class="active"><a href="#" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Aquisition<span class="caret"></span></a>
@@ -154,10 +235,11 @@
                   <li><a href="course_outline.php" data-toggle="tooltip" data-placement='bottom' title="Course Outline">Course Outline</a></li>
                 </ul>
               </li>
+              <!-- <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li> -->
             </ul>
             <ul class="nav navbar-nav navbar-right" style="font-size: 17px;">
-              <li class="active"><a href="#" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li>
-              <li><span> <img src="images/users/<?php echo $name; ?>" class=" pics img-responsive" alt="profile picture"></span>  </li>
+              <li><a href="contact-us.php" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li>  
+              <li><span><img src="images/users/<?php echo $display; ?>" class=" pics img-responsive" alt="profile picture"></span>  </li>          
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $id; ?><span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -183,7 +265,7 @@
                   <li><a href="about-us.php">About us</a></li>
                 </ul>
               </li>
-              <li><a href="profile.php">Profile</a></li>
+              <li class="active" style="background: rgb(233, 239, 236) none repeat scroll 0% 0%;"><a href="#">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Acquisition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
                 <ul class="dropdown-menu">
@@ -192,7 +274,7 @@
                   <li><a href="course_outline.php" data-toggle="tooltip" data-placement='bottom' title="Course Outline">Course Outline</a></li>
                 </ul>
               </li>
-              <li class="active" style="background: rgb(233, 239, 236) none repeat scroll 0% 0%;"><a href="#">Contact Us</a></li>
+              <li class=""><a href="contact-us.php">Contact Us</a></li>
               <!-- <li><a href="#">Skin Care</a></li>
               <li><a href="#">Taloring</a></li>
               <li><a href="#">Hat Making</a></li>
@@ -203,56 +285,77 @@
         </div>
         <!-- contact form -->
         <div class="col-md-9 col-sm-9">
-          <div class="col-md-12">
-            <div class="well">
-              <h4>Contact Us</h4><hr>
-              <div>
-                <p class="text"><span class="glyphicon glyphicon-home"></span> <span class="glyphicon glyphicon-chevron-right"></span> Address:<span style="color: #134B92; font-size: 17px;"> 4, marly close, Aiyetoro Ijanikin Lagos.</span></p>
-                <p class="text"><span class="glyphicon glyphicon-envelope"></span> <span class="glyphicon glyphicon-chevron-right"></span> Email: <span style="color: #134B92; font-size: 17px;"> pci.wonderfulmum@yahoo.com</span></p>
-                <p class="text"><span class="glyphicon glyphicon-phone"></span> <span class="glyphicon glyphicon-chevron-right"></span> Phone: <span style="color: #134B92; font-size: 17px; font-size: 17px;">09064333281 <br><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span> <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #134B92; font-size: 17px;">&nbsp;</span> 08162463230</span></p>
-              </div><br><br>
-              
-                <div class="">
-                  <h5><strong><u> Send us feedback</u></strong></h5>
-                </div><br><br>
-                <p class="alert-success"><?php echo $delivery; ?></p>
-                <br><br>
-                <form class="form-horizontal" role="form" action="" name="upload" method="post">
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label">Full Name:</label>
-                    <div class="col-lg-8">
-                      <input class="form-control" type="text" name="fullname" required>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label">Email:</label>
-                    <div class="col-lg-8">
-                      <input class="form-control" type="text" name="email" required>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label">Subject:</label>
-                    <div class="col-lg-8">
-                    <input class="form-control" type="text" name="subject" required>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label">Message:</label>
-                    <div class="col-lg-8">
-                      <textarea class="form-control" type="text" name="message" required>  </textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-                    <div class="col-md-8">
-                      <button type="submit" name="btn-send" class="btn btn-primary btn-lg" value="Send">Send</button>
-                    </div>
-                  </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="profile-sidebar">
+                <h3 style="padding: 0 10px 0;">Edit Profile</h3><br>
+              </div><br>
+            </div>
+          </div>
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-4">
+            <form  method="post" enctype='multipart/form-data'>
+              <div class="text-center profile-sidebar"><div class="profile-userpic">
+
+                <img src="images/users/<?php echo $display; ?>" class="avatar img-responsive" alt="profile picture"></div>
+                <h6>Upload a different photo...</h6>
+                
+                <input type="file" class="form-control" name="image"><br>
+                <button id="upload" type="submit" name="Submit" class="btn btn-primary" value="Change profile picture">Change profile picture</button><br><br>
                 </form>
               </div>
+            </div>
             
+            
+            <!-- edit form column -->
+            <div class="col-md-8 personal-info profile-sidebar">
+              <div class="alert alert-info alert-dismissable">
+                <a class="panel-close close" data-dismiss="alert">×</a> 
+                <i class="fa fa-coffee"></i>
+                Please edit your information below ----><strong class="alert-success"> <?php echo $errMSG; ?></strong>
+              </div>
+              <h3>Personal info</h3>
+              
+              <form class="form-horizontal" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="upload" method="post">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Full Name:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" name="fullname" value="<?php echo $fname; ?>" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Email:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" name="email" value="<?php echo $email; ?>" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Description:</label>
+                  <div class="col-lg-8">
+                  <input class="form-control" type="text" name="description" value="<?php echo $description; ?>" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Phone no:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" name="phone" value="<?php echo $phone; ?>" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <button type="submit" name="btn-update" class="btn btn-primary" value="Save Changes">SAVE</button>
+                    <span></span>
+                    <input type="submit" class="btn btn-danger" name="btn-reset" value="Cancel">
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-          
+        <hr>
+
+        </div>          
         </div>
       </div>
     </div>

@@ -29,6 +29,9 @@ height: 100px;
  h3 > a:hover {
  	color: #fe0000;
  }
+ h3 > a:active {
+ 	color: #010101;
+ }
 .login-wrap{
 	width:100%;
 	margin:auto;
@@ -44,7 +47,7 @@ height: 100px;
 	position:absolute;
 	padding:90px 70px 50px 70px;
 	background:rgba(40,57,101,.9);
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
