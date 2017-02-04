@@ -30,6 +30,7 @@
    $fname = $row['Name'];
   $email = $row['Email'];
   $description = $row['Description'];
+  $country = $row['Country'];
   $phone = $row['Phone'];
   $errMSG='';
 
@@ -54,6 +55,10 @@ if( isset($_POST['btn-update']) ) {
   $description = trim($_POST['description']);
   $description = strip_tags($description);
   $description = htmlspecialchars($description);
+
+  $country = trim($_POST['country']);
+  $country = strip_tags($country);
+  $country = htmlspecialchars($country);
   
   $phone = trim($_POST['phone']);
   $phone = strip_tags($phone);
@@ -67,7 +72,7 @@ if( isset($_POST['btn-update']) ) {
           // $phone  = $object['phone'];
         
 
-  $result = db_query("UPDATE users SET Name = '$fullname', Email = '$email', Description = '$description', Phone = '$phone'  WHERE Username = '$id'");
+  $result = db_query("UPDATE users SET Name = '$fullname', Email = '$email', Description = '$description', Country = '$country', Phone = '$phone'  WHERE Username = '$id'");
   if ($result == 1) {
     $errMSG = " Records Updated!";
   }
@@ -100,7 +105,7 @@ if(isset($_POST['Submit'])){
         if ($error > 0){
             die("Error uploading file! Code $error.");
         }else{
-            if($size > 10000000) //conditions for the file
+            if($size > 1000) //conditions for the file
             {
             die("Format is not allowed or file size is too big!");
             }
@@ -228,7 +233,7 @@ if(isset($_POST['Submit'])){
               <li class="active"><a href="#" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Aquisition<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill Aquisition<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="courses.php" data-toggle="tooltip" data-placement='bottom' title="Courses"><span class="glyphicon glyphicon-book"></span> Courses</a></li>
                   <li role="separator" class="divider"></li>
@@ -257,7 +262,7 @@ if(isset($_POST['Submit'])){
             <!-- side navigation -->
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <h4>PCI Wonderfull Mum</h4><hr>
+            <h4> PCI Wonderful Mum</h4><hr>
             <nav>
             <ul class="nav">
               <li class="dropdown"><a href="index.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -267,7 +272,7 @@ if(isset($_POST['Submit'])){
               </li>
               <li class="active" style="background: rgb(233, 239, 236) none repeat scroll 0% 0%;"><a href="#">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
-              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Acquisition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
+              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill Acquisition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="courses.php" data-toggle="tooltip" data-placement='bottom' title="Courses"><span class="glyphicon glyphicon-book"></span> Courses</a></li>
                   <li role="separator" class="divider"></li>
@@ -331,9 +336,15 @@ if(isset($_POST['Submit'])){
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label">Description:</label>
+                  <label class="col-lg-3 control-label">State/Region:</label>
                   <div class="col-lg-8">
                   <input class="form-control" type="text" name="description" value="<?php echo $description; ?>" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Country:</label>
+                  <div class="col-lg-8">
+                  <input class="form-control" type="text" name="country" value="<?php echo $country; ?>" >
                   </div>
                 </div>
                 <div class="form-group">
@@ -365,6 +376,7 @@ if(isset($_POST['Submit'])){
     </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.js"></script>

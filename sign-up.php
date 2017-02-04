@@ -38,23 +38,27 @@ if ( isset($_SESSION['user'])) {
   $regphone = trim($_POST['regphone']);
   $regphone = strip_tags($regphone);
   $regphone = htmlspecialchars($regphone);
+
+  $gender = trim($_POST['gender']);
+  $gender = strip_tags($gender);
+  $gender = htmlspecialchars($gender);
   
   // basic username validation
   if (empty($regusername)) {
    $error = true;
-   $regusernameError = "Please enter your username.";
+   $errMSG = "Please enter your username.";
   } else if (strlen($regusername) < 3) {
    $error = true;
-   $regusernameError = "userame must have at least 3 characters.";
+   $errMSG = "userame must have at least 3 characters.";
   }
   
    // password validation
   if (empty($regpass)){
    $error = true;
-   $regpassError = "Please enter password.";
+   $errMSG = "Please enter password.";
   } else if(strlen($regpass) < 6) {
    $error = true;
-   $regpassError = "Password must have atleast 6 characters.";
+   $errMSG = "Password must have atleast 6 characters.";
   }
   
   // password encrypt using SHA256();
@@ -65,7 +69,7 @@ if ( isset($_SESSION['user'])) {
    // password validation
   if ($regpass != $regcpass){
    $error = true;
-   $regcpassError = "Password and Confirm Password doesn't match.";
+   $errMSG = "Password and Confirm Password doesn't match.";
   }
   // password encrypt using SHA256();
   // $password = hash('sha256', $regcpass);
@@ -78,15 +82,15 @@ if ( isset($_SESSION['user'])) {
   if (empty($regemail))
    {
    $error = true;
-   $regemailError = "Please enter valid email address.";
+   $errMSG = "Please enter valid email address.";
   } else {
    // check email exist or not
    $query = "SELECT Email FROM users WHERE Email='$regemail'";
    $result = db_query($query);
-   $count = db_query_num_rows($result);
+   $count = mysqli_fetch_array($result);
    if($count!=0){
     $error = true;
-    $regemailError = "Provided Email is already in use.";
+    $errMSG = "Provided Email is already in use.";
    }
   }
   return $result;
@@ -95,23 +99,35 @@ if ( isset($_SESSION['user'])) {
     // basic name validation
   if (empty($regfullname)) {
    $error = true;
-   $regfullnameError = "Please enter your full name.";
+   $errMSG = "Please enter your full name.";
   } else if (strlen($regfullname) < 3) {
    $error = true;
    $regfullError = "full name must have at least 3 characters.";
   } else if (!preg_match("/^[a-zA-Z ]+$/",$regfullname)) {
    $error = true;
-   $regfullnameError = "full name must contain alphabets and space.";
+   $errMSG = "full name must contain alphabets and space.";
   }
   
     // basic gender validation
+  if (empty($gender)) {
+   $error = true;
+   $errMSG = "Please input your phone number.";
+  }
+
   if (empty($regphone)) {
    $error = true;
-   $reggenderError = "Please input your phone number.";
+   $errMSG = "Please input your phone number.";
   }
   
+    $rest = db_query("SELECT * FROM users WHERE Email = '$regemail' ");
+    $check = mysqli_fetch_array($rest);
+    $checkemail = $check['Email'];
+    if ($checkemail === $regemail) {
+      # code...
+      $errMSG = 'Email already exits';
+    } else {
 
-    $result = db_query("INSERT INTO users(Username,Password,Email,Name,Phone) VALUES('$regusername','$password','$regemail','$regfullname','$regphone')");
+    $result = db_query("INSERT INTO users(Username,Password,Email,Name,Phone,Gender) VALUES('$regusername','$password','$regemail','$regfullname','$regphone','$gender')");
     
    if ($result === true) {
     $errMSG = "success! you may login now";
@@ -123,7 +139,7 @@ if ( isset($_SESSION['user'])) {
     else {
     $errMSG = "Something went wrong, try again later..."; 
    } 
-  
+  }
  }
 
 // this section is for sign in
@@ -165,7 +181,7 @@ if ( isset($_SESSION['user'])) {
     $row = mysqli_fetch_array($result);
     $_SESSION['user'] = $row['Username'];
     $_SESSION['start'] = time();//taking login time
-    $_SESSION['expire'] = $_SESSION['start'] + (15 * 60);//ending the session in 2
+    $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);//ending the session in 30 mins
     // if ($row['Admin'] == 1) {
     //   header('location: admin.php');
     // } else {
@@ -203,7 +219,7 @@ if ( isset($_SESSION['user'])) {
 	<div class="login-html"><p style="color: #ECFFFF;">Don't have an account? <label for="tab-2" style="color: red;"> Sign Up now!</a></p>
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
 		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"> &nbsp;Sign Up</label>
-		<div class="login-form">
+		<div class="login-form"><p class="alert-danger"><?php echo $errMSG; ?></p><br><br>
 			<div class="sign-in-htm">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
   				<div class="group">
@@ -252,6 +268,14 @@ if ( isset($_SESSION['user'])) {
           <div class="group">
             <label for="pass" class="label">Fullname</label>
             <input id="pass" name="regfullname" type="text" class="input" required>
+          </div>
+          <div class="group login-group-checkbox">
+            <label for="pass" class="label male">Male</label>
+            <input id="pass" name="gender" value="male" type="radio" class="input label-2" style="margin-left: -150px;" >
+
+            <label for="pass" class="label female">Female</label>
+            <input id="pass" name="gender" value="female" type="radio" class="input label-3" style="margin-left: 150px;" >
+
           </div>
           <div class="group">
             <label for="pass" class="label">Phone</label>

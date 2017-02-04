@@ -31,6 +31,8 @@
     
     }
   }
+
+  $rest = db_query("SELECT * FROM users ");
   
 
   if (isset($_POST['btn-send'])) {
@@ -287,20 +289,57 @@
                     </div>
                   </div>
                 </form>
+                <br>
+
+                <!-- table to display list of active users -->
+                
+                  <h3><u>List of registered users and details</u></h3><br>
+                  <div class="row">
+                    <div class="col-sm-12 well">
+                    <table class="table table-responsive table-bordered table-striped table-condensed">
+                      <thead>
+                        <tr>
+                          <th>s/n</th>
+                          <th>Username</th>
+                          <th>Fullname</th>
+                          <th>Email</th>
+                          <th>Gender</th>
+                          <th>State</th>
+                          <th>Country</th>
+                          <th>Phone</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php $count=0;
+                          while( $row = mysqli_fetch_array( $rest ) ){ $count++;
+                            echo
+                            "<tr>
+                              <td>$count</td>
+                              <td>{$row['Username']}</td>
+                              <td>{$row['Name']}</td>
+                              <td>{$row['Email']}</td>
+                              <td>{$row['Gender']}</td>
+                              <td>{$row['Description']}</td>
+                              <td>{$row['Country']}</td>
+                              <td>{$row['Phone']}</td>
+                            </tr>\n";
+                          }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            
+            </div>
           </div>
-          
         </div>
       </div>
-    </div>
 
 
     <!-- end of container -->
     </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.fa.min.js" ></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.js"></script>

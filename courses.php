@@ -32,6 +32,62 @@
     // $display = $row['Profilepic'];
   }  // $descrip = $row['Description'];
 } 
+
+  $first_course = "Tailoring";
+  $sec_course = "Bridal Makeover";
+  $third_course = "Bead Making";
+  $fourth_course = "Catering";
+  $fifth_course = "Ankara Craft";
+  $sixth_course = "Events Management";
+  $seventh_course = "Hat Making";
+  $eight_course = "Skin Care";
+  $ninth_course = "Soap Making";
+  
+  // first row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$first_course' ");
+  $list = mysqli_fetch_array($result);
+  $dates = $list['Dates'];
+  $amount = $list['Amount'];
+  // second row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$sec_course' ");
+  $list = mysqli_fetch_array($result);
+  $sec_dates = $list['Dates'];
+  $sec_amount = $list['Amount'];
+  // third row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$third_course' ");
+  $list = mysqli_fetch_array($result);
+  $third_dates = $list['Dates'];
+  $third_amount = $list['Amount'];
+  // fourth row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$fourth_course' ");
+  $list = mysqli_fetch_array($result);
+  $fourth_dates = $list['Dates'];
+  $fourth_amount = $list['Amount'];
+  // fifth row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$fifth_course' ");
+  $list = mysqli_fetch_array($result);
+  $fifth_dates = $list['Dates'];
+  $fifth_amount = $list['Amount'];
+  // sixth row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$sixth_course' ");
+  $list = mysqli_fetch_array($result);
+  $sixth_dates = $list['Dates'];
+  $sixth_amount = $list['Amount'];
+  // seventh row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$seventh_course' ");
+  $list = mysqli_fetch_array($result);
+  $seventh_dates = $list['Dates'];
+  $seventh_amount = $list['Amount'];
+  // eight row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$eight_course' ");
+  $list = mysqli_fetch_array($result);
+  $eight_dates = $list['Dates'];
+  $eight_amount = $list['Amount'];
+  // ninth row
+  $result = db_query("SELECT * FROM courses WHERE Name = '$ninth_course' ");
+  $list = mysqli_fetch_array($result);
+  $ninth_dates = $list['Dates'];
+  $ninth_amount = $list['Amount'];
  // $res=mysql_query("SELECT * FROM users WHERE userUsername=".$_SESSION['user']);
  // $userRow=mysql_fetch_array($res);
 ?>
@@ -118,7 +174,7 @@
               <li><a href="profile.php" data-toggle="tooltip" data-placement='bottom'  title="Profile">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom'  title="Tutorials">Tutorials</a></li>
               <li class="active dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill and Aquisition<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill Aquisition<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Courses"><span class="glyphicon glyphicon-book"></span> Courses</a></li>
                   <li role="separator" class="divider"></li>
@@ -171,8 +227,8 @@
 
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
-                </p>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span><?php echo $dates; ?></font></strong>
+                </p> 
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/tailoring.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
                 </p>
@@ -183,7 +239,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $amount; ?></span></strong>
                   </span>
                 </p>
                 <p>

@@ -2,6 +2,10 @@
 	'use strict';
 
 $("#home a:contains('Home')").parent().addClass('active');
+$("#home a:contains('Home')").parent().addClass('active');
+$("#home a:contains('Home')").parent().addClass('active');
+$("#home a:contains('Home')").parent().addClass('active');
+$("#home a:contains('Home')").parent().addClass('active');
 
 $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip(); 
@@ -17,3 +21,4 @@ $(document).ready(function(){
               format: "dd/mm/yyyy"
           });  
       });
+});

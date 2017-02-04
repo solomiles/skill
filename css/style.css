@@ -188,3 +188,24 @@ height: 100px;
 .container {
 	 background: RGB(208, 208, 208);
 }
+.login-group {
+  background: #ffffff;
+  color: #999999;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+.login-group-checkbox {
+  padding: 5px 0;
+}
+.label-2, .label-3, .male, .female{
+	position: absolute;
+}
+.female {
+	margin-left: 100px;
+}
+.male {
+	margin-left: -100px;
+}
+.label-2 {
+	margin-left: -70px;
+}
