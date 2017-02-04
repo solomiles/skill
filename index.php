@@ -2,7 +2,7 @@
  ob_start();
  session_start();
  include_once 'dbconnect.php';
-  $title = 'HOME | PECULIAR CONCEPTS INTERNATIONAL';
+  $title = 'HOME | PECULIAR CONCEPTS INTERNATIONAL SKILL ACQUISITION';
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
   header("Location: sign-up.php");
@@ -45,7 +45,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Skill Acquisition" content="Skill Acquisition, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title><?php echo $title; ?></title>
     <link rel="shortcut icon" href="images/skill102.jpg" type="image/x-icon" />

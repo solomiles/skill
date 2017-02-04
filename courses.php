@@ -38,7 +38,7 @@
   $third_course = "Bead Making";
   $fourth_course = "Catering";
   $fifth_course = "Ankara Craft";
-  $sixth_course = "Events Management";
+  $sixth_course = "Events Management and Decoration";
   $seventh_course = "Hat Making";
   $eight_course = "Skin Care";
   $ninth_course = "Soap Making";
@@ -261,7 +261,7 @@
           
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $sec_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/bridal.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -273,7 +273,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $sec_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>
@@ -295,7 +295,7 @@
           
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $third_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/bead.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -307,7 +307,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $third_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>
@@ -333,7 +333,7 @@
 
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $fourth_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/catering.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -345,7 +345,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $fourth_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>
@@ -367,7 +367,7 @@
           
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $fifth_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/ankara.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -379,7 +379,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $fifth_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>
@@ -401,7 +401,7 @@
           
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $sixth_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/eventdec.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -413,7 +413,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $sixth_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>
@@ -439,7 +439,7 @@
 
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $seventh_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/hat.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -451,7 +451,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $seventh_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>
@@ -473,7 +473,7 @@
           
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $eight_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/skincare.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -485,7 +485,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $eight_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>
@@ -507,7 +507,7 @@
           
             <div class="col-md-4">
               <div class="profile-sidebar">
-                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> 30, Jan - 3, Feb, 2017</font></strong>
+                <p><strong><font color="#b22222" size="3"><span class="glyphicon glyphicon-time"></span> <?php echo $ninth_dates; ?></font></strong>
                 </p>
                 <p>
                   <a href="#" target="_self"><img alt="image" src="images/soap.jpg" class="img-rounded" style="width: 240px; height: 124px;"></a>
@@ -519,7 +519,7 @@
                     <strike><span style="font-size: 20px;"><strong>N</strong></span></strike>
                   </span>
                   <span style="font-size: 20px;">
-                    <strong><span style="color:#ff8c00;">10,500</span></strong>
+                    <strong><span style="color:#ff8c00;"><?php echo $ninth_amount; ?></span></strong>
                   </span>
                 </p>
                 <p>

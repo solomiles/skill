@@ -2,7 +2,7 @@
  ob_start();
  session_start();
  include_once 'dbconnect.php';
-  $title = 'Profile | PECULIAR CONCEPTS INTERNATIONAL';
+  $title = 'Profile | PECULIAR CONCEPTS INTERNATIONAL SKILL ACQUISITION';
   $delivery = "";
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
@@ -105,7 +105,7 @@ if(isset($_POST['Submit'])){
         if ($error > 0){
             die("Error uploading file! Code $error.");
         }else{
-            if($size > 1000) //conditions for the file
+            if($size > 1000000) //conditions for the file
             {
             die("Format is not allowed or file size is too big!");
             }
@@ -148,7 +148,7 @@ if(isset($_POST['Submit'])){
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Skill Acquisition" content="skill Acquisition, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title><?php echo $title; ?></title>
     <link rel="shortcut icon" href="images/skill102.jpg" type="image/x-icon" />

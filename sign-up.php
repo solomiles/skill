@@ -214,7 +214,8 @@ if ( isset($_SESSION['user'])) {
 
 <body>
 <div class="container">
-  <header><img src="images/skill102.jpg" alt="company logo" class="img-rounded img-responsive" height="100" width=""><h3><a href="">Welcome To Peculiar Concepts International <em>Skils Acquisition Website</em></h3></a></header><br>
+  <header><img src="images/skill102.jpg" alt="company logo" class="img-rounded img-responsive" height="100" width="">
+  <div class="container-fluid"><h3><a href="">Welcome To Peculiar Concepts International <em>Skils Acquisition Website</em></a></h3></div></header><br>
   <div class="login-wrap">
 	<div class="login-html"><p style="color: #ECFFFF;">Don't have an account? <label for="tab-2" style="color: red;"> Sign Up now!</a></p>
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
@@ -288,7 +289,7 @@ if ( isset($_SESSION['user'])) {
             </button>
   				</div>
         </form>
-				<div class="hr"></div>
+				<!-- <div class="hr"></div> -->
 				<div class="foot-lnk">
 					<label for="tab-1">Already Member?</a>
 				</div>

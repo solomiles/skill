@@ -238,7 +238,7 @@
           <div class="col-md-12">
             <div class="well">
               <h3>Peculiar Concepts ADMIN Page</h3>
-              <div class="alert alert-danger alert-dismissable">WARNING!!! Please Make Sure You Understand What you Are To Do<?php echo $saved; ?></div><hr>
+              <div class="alert alert-danger alert-dismissable">WARNING!!! Please Make Sure You Understand What you Are About To Do<?php echo $saved; ?></div><hr>
               
                 <div class="">
                   <h5><strong>Edit Courses</strong></h5>
