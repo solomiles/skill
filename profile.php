@@ -204,7 +204,7 @@ if(isset($_POST['Submit'])){
     </style>
    
   </head>
-  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; margin-top: 25px;">
+  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; margin-top: 5px;">
     <header>
       <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width="">
     </header>

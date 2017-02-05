@@ -264,7 +264,7 @@ if ( isset($_SESSION['user'])) {
   				</div>
   				<div class="group">
   					<label for="pass" class="label">Email Address</label>
-  					<input id="pass" name="regemail" type="text" class="input" required>
+  					<input id="pass" name="regemail" type="email" class="input" required>
   				</div>
           <div class="group">
             <label for="pass" class="label">Fullname</label>
