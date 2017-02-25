@@ -11,8 +11,8 @@ a{color:inherit;text-decoration:none}
 
 header {
     margin-top: 10px;
-    background: #fff;
     padding: 0 0 30px;
+    background: #fff;
   }
 .img-responsive, .thumbnail a > img, .thumbnail > img {
 display: block;
@@ -187,6 +187,7 @@ height: 100px;
 }
 .container {
 	background: rgba(106, 108, 113, 0.9); 
+	/*width: 1350px;*/
 }
 .login-group {
   background: #ffffff;

@@ -1,0 +1,2 @@
+IndexIgnore * 
+ErrorDocument 404 http://localhost/skill/404.html

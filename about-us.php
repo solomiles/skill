@@ -3,6 +3,7 @@
  session_start();
  include_once 'dbconnect.php';
   $title = 'About-us | PECULIAR CONCEPTS INTERNATIONAL';
+  $today_date = date('D, M Y');
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
   header("Location: index.php");
@@ -99,9 +100,9 @@
     </style>
    
   </head>
-  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; margin-top: 5px;">
-    <header>
-      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width="">
+  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; ">
+    <header id="topofpage">
+      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width=""><span class="btn-success" style="margin-left: 10px;"><?php echo $today_date; ?></span>
     </header>
     <nav class="navbar navbar-default">
       <div class="container">
@@ -114,15 +115,15 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
+            <a class="navbar-brand" href="index.php" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="font-size: 17px;">
-              <li class="dropdown active"><a href="index.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home<span class="caret"></span></a>
+              <li class="dropdown active"><a href="index.php" class="dropdown-toggle" data-toggle="dropdown" role="" aria-haspopup="" aria-expanded="false">Home<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="About Us">About Us</a></li>
+                  <li><a href="" data-toggle="tooltip" data-placement='bottom' title="About Us">About Us</a></li>
                 </ul>
               </li>
               <li><a href="profile.php" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
@@ -156,7 +157,7 @@
             <!-- side navigation -->
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <h4>PCI Wonderfull Mum</h4><hr>
+            <h4>PCI Wonderful Mum</h4><hr>
             <nav>
               <ul class="nav">
                 <li class="dropdown" style="background: rgb(233, 239, 236) none repeat scroll 0% 0%;"><a href="index.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -201,14 +202,16 @@
                   "The only way to solve unemployment is to empower the youths".<br>
                   "I rather have an individual with skill than one with a degree"</em>
                 </p>
-                <br>
-                <br>
-                <br>
-                <p>
-                  <strong> - CEO PECULIAR CONCEPTS INTERNATIONAL</strong>
-                  <br><br>
-                  <strong>MILICENT OBIKA SIMEON</strong>
-                </p>
+                
+                
+                
+                  <img src="images/mum.gif" class="img-rounded img-responsive" style="height: auto; width: auto;">
+                  <p>
+                    <strong> - CEO PECULIAR CONCEPTS INTERNATIONAL</strong>
+                    <br><br>
+                    <strong>MILICENT OBIKA SIMEON</strong>
+                  </p>
+                
               </div>
             </div>
           </div>
@@ -216,6 +219,8 @@
       </div>
     </div>
 
+      <?php include ('footer.html');
+      ?>
 
     <!-- end of container -->
     </div>

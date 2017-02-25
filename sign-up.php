@@ -11,7 +11,7 @@ if ( isset($_SESSION['user'])) {
  $error = false;
  $title = 'PCI | Signup';
  $errMSG='';
-
+ 
  if ( isset($_POST['btn-signup']) ) {
   
   // clean user inputs to prevent sql injections
@@ -47,9 +47,9 @@ if ( isset($_SESSION['user'])) {
   if (empty($regusername)) {
    $error = true;
    $errMSG = "Please enter your username.";
-  } else if (strlen($regusername) < 3) {
+  } else if (strlen($regusername) < 7) {
    $error = true;
-   $errMSG = "userame must have at least 3 characters.";
+   $errMSG = "userame must have at least 7 characters.";
   }
   
    // password validation
@@ -66,11 +66,8 @@ if ( isset($_SESSION['user'])) {
    // echo $password;
 
   
-   // password validation
-  if ($regpass != $regcpass){
-   $error = true;
-   $errMSG = "Password and Confirm Password doesn't match.";
-  }
+   
+ 
   // password encrypt using SHA256();
   // $password = hash('sha256', $regcpass);
   
@@ -97,37 +94,58 @@ if ( isset($_SESSION['user'])) {
 }
   
     // basic name validation
-  if (empty($regfullname)) {
-   $error = true;
-   $errMSG = "Please enter your full name.";
-  } else if (strlen($regfullname) < 3) {
-   $error = true;
-   $regfullError = "full name must have at least 3 characters.";
-  } else if (!preg_match("/^[a-zA-Z ]+$/",$regfullname)) {
-   $error = true;
-   $errMSG = "full name must contain alphabets and space.";
-  }
+  // if (empty($regfullname)) {
+  //  $error = true;
+  //  $errMSG = "Please enter your full name.";
+  // } else if (strlen($regfullname) < 7) {
+  //  $error = true;
+  //  $regfullError = "full name must have at least 7 characters.";
+  // } else if (!preg_match("/^[a-zA-Z ]+$/",$regfullname)) {
+  //  $error = true;
+  //  $errMSG = "full name must contain alphabets and space.";
+  // }
   
     // basic gender validation
-  if (empty($gender)) {
-   $error = true;
-   $errMSG = "Please input your phone number.";
-  }
+  // if (empty($gender)) {
+  //  $error = true;
+  //  $errMSG = "Please input your phone number.";
+  // }
 
-  if (empty($regphone)) {
-   $error = true;
-   $errMSG = "Please input your phone number.";
-  }
+  // if (empty($regphone)) {
+  //  $error = true;
+  //  $errMSG = "Please input your phone number.";
+  // }
+
+  $today_date = Date('Y-m-d');
+  // die($today_date);
   
-    $rest = db_query("SELECT * FROM users WHERE Email = '$regemail' ");
+    $rest = db_query("SELECT * FROM users  ");
     $check = mysqli_fetch_array($rest);
     $checkemail = $check['Email'];
+    $checkuser = $check['Username'];
     if ($checkemail === $regemail) {
       # code...
-      $errMSG = 'Email already exits';
-    } else {
+      $errMSG = 'Email already in use';
+    } elseif ($checkuser === $regusername) {
+      # code...
+      $errMSG = 'Username already in use';
+    } elseif ($regpass != $regcpass) { // password validation
+      # code...
+      $errMSG = "Password and Confirm Password doesn't match.";
+    } elseif (strlen($regfullname) < 7) {
+      # code...
+      $errMSG = "full name must contain alphabets and space.";
+    }  
+     else if(strlen($regpass) < 8) {
+     $error = true;
+     $errMSG = "Password must have at least 8 characters.";
+    } elseif (!preg_match("/^[a-zA-Z ]+$/",$regfullname)) {
+      # code...
+      $error = true;
+      $errMSG = "full name must contain alphabets and space.";
+    } else  {
 
-    $result = db_query("INSERT INTO users(Username,Password,Email,Name,Phone,Gender) VALUES('$regusername','$password','$regemail','$regfullname','$regphone','$gender')");
+    $result = db_query("INSERT INTO users(Username,Password,Email,Name,Phone,Gender,Dateregister) VALUES('$regusername','$password','$regemail','$regfullname','$regphone','$gender','$today_date')");
     
    if ($result === true) {
     $errMSG = "success! you may login now";
@@ -181,7 +199,7 @@ if ( isset($_SESSION['user'])) {
     $row = mysqli_fetch_array($result);
     $_SESSION['user'] = $row['Username'];
     $_SESSION['start'] = time();//taking login time
-    $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);//ending the session in 30 mins
+    $_SESSION['expire'] = $_SESSION['start'] + (60 * 60 * 60);//ending the session in 4 hours
     // if ($row['Admin'] == 1) {
     //   header('location: admin.php');
     // } else {
@@ -214,10 +232,10 @@ if ( isset($_SESSION['user'])) {
 
 <body>
 <div class="container">
-  <header><img src="images/skill102.jpg" alt="company logo" class="img-rounded img-responsive" height="100" width="">
-  <div class="container-fluid"><h3><a href="">Welcome To Peculiar Concepts International <em>Skils Acquisition Website</em></a></h3></div></header><br>
+  <header><img src="images/logo.png" alt="company logo" class="img-rounded img-responsive" height="100" width="">
+  <div class="container-fluid"><h3><a href="">Welcome To Peculiar Concepts International <em>Skills Acquisition Website</em></a></h3></div></header><br>
   <div class="login-wrap">
-	<div class="login-html"><p style="color: #ECFFFF;">Don't have an account? <label for="tab-2" style="color: red;"> Sign Up now!</a></p>
+	<div class="login-html"><p style="color: #ECFFFF;">Don't have an account? <label for="tab-2" style="color: red;"> Sign Up For Free now!</a></p>
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
 		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"> &nbsp;Sign Up</label>
 		<div class="login-form"><p class="alert-danger"><?php echo $errMSG; ?></p><br><br>
@@ -225,11 +243,11 @@ if ( isset($_SESSION['user'])) {
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
   				<div class="group">
   					<label for="user" class="label">Username</label>
-  					<input id="user" name="lgusername" type="text" class="input" required>
+  					<input id="user" name="lgusername" placeholder="Enter your username" type="text" class="input" required>
   				</div>
   				<div class="group">
   					<label for="pass" class="label">Password</label>
-  					<input id="pass" name="lgpass" type="password" class="input" data-type="password" required>
+  					<input id="pass" name="lgpass" type="password" placeholder="Enter your password" class="input" data-type="password" required>
   				</div>
   				<div class="group">
   					<input id="check" type="checkbox" class="check" checked required>
@@ -244,7 +262,7 @@ if ( isset($_SESSION['user'])) {
         </form>
 				<div class="hr"></div>
 				<div class="foot-lnk">
-					<a href="#forgot">Forgot Password?</a>
+					<a href="forgotpassword.php">Forgot Password?</a>
 				</div>
 			</div>
       
@@ -252,23 +270,23 @@ if ( isset($_SESSION['user'])) {
         <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
   				<div class="group">
   					<label for="user" class="label">Username</label>
-  					<input id="user" name="regusername" type="text" class="input" required>
+  					<input id="user" name="regusername" placeholder="Enter Username" type="text" class="input" required>
   				</div>
   				<div class="group">
   					<label for="pass" class="label">Password</label>
-  					<input id="pass" name="regpass" type="password" class="input" data-type="password" required>
+  					<input id="pass" name="regpass" type="password" placeholder="Enter password" class="input" data-type="password" required>
   				</div>
   				<div class="group">
   					<label for="pass" class="label">Repeat Password</label>
-  					<input id="pass" type="password" name="regcpass" class="input" data-type="password" required>
+  					<input id="pass" type="password" name="regcpass" placeholder="Repeat password" class="input" data-type="password" required>
   				</div>
   				<div class="group">
   					<label for="pass" class="label">Email Address</label>
-  					<input id="pass" name="regemail" type="email" class="input" required>
+  					<input id="pass" name="regemail" type="email" placeholder="Enter email eg: example@mail.com" class="input" required>
   				</div>
           <div class="group">
             <label for="pass" class="label">Fullname</label>
-            <input id="pass" name="regfullname" type="text" class="input" required>
+            <input id="pass" name="regfullname" type="text" placeholder="Enter Fullname" class="input" required>
           </div>
           <div class="group login-group-checkbox">
             <label for="pass" class="label male">Male</label>
@@ -280,7 +298,7 @@ if ( isset($_SESSION['user'])) {
           </div>
           <div class="group">
             <label for="pass" class="label">Phone</label>
-            <input id="pass" name="regphone" type="text" class="input" required>
+            <input id="pass" name="regphone" type="text" placeholder="phone number" class="input" required>
           </div>
   				<div class="group">
   					<button type="submit" name="btn-signup" class="btn btn-primary btn-lg" style="border: none;

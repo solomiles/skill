@@ -2,7 +2,8 @@
  ob_start();
  session_start();
  include_once 'dbconnect.php';
-  $title = 'HOME | PECULIAR CONCEPTS INTERNATIONAL SKILL ACQUISITION';
+  $title = 'HOME | PECULIAR CONCEPTS INTERNATIONAL SKILL ACQUISITION TRAINING PROGRAMME';
+  $today_date = date('D, M Y');
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
   header("Location: sign-up.php");
@@ -30,6 +31,9 @@
     $row = mysqli_fetch_array($result);
     $name = $row['Profilepic'];
 
+    $rest = db_query("SELECT * FROM slider");
+
+    $reslt = db_query("SELECT * FROM courses");
     // $display = $row['Profilepic'];
     // $descrip = $row['Description'];
  // select loggedin users detail
@@ -86,7 +90,8 @@
       .carousel-inner > .item > img,
       .carousel-inner > .item > a > img {
         width: 120%;
-        margin: auto; 
+        margin: auto;
+        height: 500px; 
       }
        .pics {
         height: 45px;
@@ -97,9 +102,9 @@
     </style>
    
   </head>
-  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; margin-top: 5px;">
-    <header>
-      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width="">
+  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; ">
+    <header id="topofpage" >
+      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width=""><span class="btn-success" style="margin-left: 10px;"><?php echo $today_date; ?></span>
     </header>
     <nav class="navbar navbar-default">
       <div class="container">
@@ -112,7 +117,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
+            <a class="navbar-brand" href="" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -153,7 +158,7 @@
       <div class="col-md-12">
             <!-- Courses -->
         <div class="col-md-4">
-          <div class="profile-sidebar">
+          <div class="well">
             <h4 style="background: rgb(114, 105, 101) none repeat scroll 0% 0%; color: rgb(255, 255, 255);">Upcoming Events</h4><hr>
 
             <!-- start of upcoming events calender -->
@@ -162,68 +167,31 @@
               <div style="line-height: 140%;">
                 <a href="#" target="_self"><span style="font-size:16px;"><strong style="line-height: 140%;"><span style="color: rgb(255, 140, 0);">Peculiar Concepts International Skill Acquisition Training &nbsp;Programme</span></strong></span></a>
               </div>
-              <div style="line-height:140%;">
-                <div style="line-height: 140%;">
+              <?php   for ($count=0; $count<3; $count++ ) {  
+                $row = mysqli_fetch_array( $reslt );
+              
+                echo
+                "
+              <div style='line-height:140%;'>
+                <div style='line-height: 140%;'>
                   &nbsp;
                 </div>
-                <div style="line-height: 140%;">
-                  <a href="#" target="_self"><span style="font-size:16px;"><strong><span style="color:#ff8c00;">&nbsp; Tailoring&nbsp; </span></strong> </span></a></div>
-                <div style="line-height: 140%;">
+                <div style='line-height: 140%;'>
+                  <a href='#' target='_self'><span style='font-size:16px;'><strong><span style='color:#ff8c00;'>&nbsp; {$row["Name"]}&nbsp; </span></strong> </span></a></div>
+                <div style='line-height: 140%;'>
                   &nbsp;</div>
               </div>
-              <div style="line-height: 140%;">
-                <a href="#" target="_self"><img alt="" src="images/tailoring.jpg" style="width: 149px; height: 91px; margin-left: 10px; margin-right: 10px; float: left;"></a><span style="line-height: 16.8px;">30 Jan - 3, Feb</span><span style="line-height: 16.8px;">, 2017</span>
+              <div style='line-height: 140%;'>
+                <a href='#' target='_self'><img alt='' src='images/{$row["image"]}' style='width: 149px; height: 91px; margin-left: 10px; margin-right: 10px; float: left;'></a><span style='line-height: 16.8px;'>{$row["Dates"]}</span>
               </div>
-              <div style="line-height: 140%;">
+              <div style='line-height: 140%;'>
                 <p>
-                  <strong style="line-height: 16.8px;">F</strong><strong style="line-height: 16.8px;">e</strong><strong style="line-height: 16.8px;">e:</strong><span style="line-height: 16.8px;">&nbsp;N10, 500</span></p>
+                  <strong style='line-height: 16.8px;'>F</strong><strong style='line-height: 16.8px;'>e</strong><strong style='line-height: 16.8px;'>e:</strong><span style='line-height: 16.8px;'>&nbsp;N{$row["Amount"]}</span></p>
                 <p>
-                  <span style="line-height: 16.8px;"><span style="font-size:20px;"><span style="font-size:12px;"><em><span style="font-size:12px;">I<em>ncludes training manual &amp; materials</em></span></em></span></span></span></p>
-              </div>
+                  <span style='line-height: 16.8px;'><span style='font-size:20px;'><span style='font-size:12px;'><em><span style='font-size:12px;'>I<em>ncludes training manual &amp; materials</em></span></em></span></span></span></p>
+              </div>\n";
+            }?>
               <!-- end of first line -->
-              <!-- second line -->
-
-              <div style="line-height:140%;">
-                <div style="line-height: 140%;">
-                  &nbsp;
-                </div>
-                <div style="line-height: 140%;">
-                  <a href="#" target="_self"><span style="font-size:16px;"><strong><span style="color:#ff8c00;">&nbsp; Catering&nbsp; </span></strong> </span></a></div>
-                <div style="line-height: 140%;">
-                  &nbsp;</div>
-              </div>
-              <div style="line-height: 140%;">
-                <a href="#" target="_self"><img alt="" src="images/catering.jpg" style="width: 149px; height: 91px; margin-left: 10px; margin-right: 10px; float: left;"></a><span style="line-height: 16.8px;">30 Jan - 3, Feb</span><span style="line-height: 16.8px;">, 2017</span>
-              </div>
-              <div style="line-height: 140%;">
-                <p>
-                  <strong style="line-height: 16.8px;">F</strong><strong style="line-height: 16.8px;">e</strong><strong style="line-height: 16.8px;">e:</strong><span style="line-height: 16.8px;">&nbsp;N10, 500</span></p>
-                <p>
-                  <span style="line-height: 16.8px;"><span style="font-size:20px;"><span style="font-size:12px;"><em><span style="font-size:12px;">I<em>ncludes training manual &amp; materials</em></span></em></span></span></span></p>
-              </div>
-              <!-- end of second line -->
-            
-              <!-- third line -->
-
-              <div style="line-height:140%;">
-                <div style="line-height: 140%;">
-                  &nbsp;
-                </div>
-                <div style="line-height: 140%;">
-                  <a href="#" target="_self"><span style="font-size:16px;"><strong><span style="color:#ff8c00;">&nbsp; Bead Making&nbsp; </span></strong> </span></a></div>
-                <div style="line-height: 140%;">
-                  &nbsp;</div>
-              </div>
-              <div style="line-height: 140%;">
-                <a href="#" target="_self"><img alt="" src="images/bead.jpg" style="width: 149px; height: 91px; margin-left: 10px; margin-right: 10px; float: left;"></a><span style="line-height: 16.8px;">30 Jan - 3, Feb</span><span style="line-height: 16.8px;">, 2017</span>
-              </div>
-              <div style="line-height: 140%;">
-                <p>
-                  <strong style="line-height: 16.8px;">F</strong><strong style="line-height: 16.8px;">e</strong><strong style="line-height: 16.8px;">e:</strong><span style="line-height: 16.8px;">&nbsp;N10, 500</span></p>
-                <p>
-                  <span style="line-height: 16.8px;"><span style="font-size:20px;"><span style="font-size:12px;"><em><span style="font-size:12px;">I<em>ncludes training manual &amp; materials</em></span></em></span></span></span></p>
-              </div>
-              <!-- end of third line -->
               <!-- click for more -->
               <p style="line-height: 16.8px;">
               &nbsp;
@@ -235,7 +203,7 @@
                 <a href="courses.php" target="_self"><em>Click to view our full training calender</em></a></p>
               <p style="line-height: 16.8px;">
                 &nbsp;
-              </p>
+              </p><br><br><br><br><br>
             </div>
             <!-- end of click for more -->
             <!-- end of upcoming calender -->
@@ -257,51 +225,57 @@
 
               <!-- Wrapper for slides -->
               <div class="carousel-inner" role="listbox">
-
-                <div class="item active">
-                  <img src="images/hom1.jpg" alt="tunnel" width="320" height="120">
-                  <div class="carousel-caption">
-                    <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+              
+              <?php
+                while( $row = mysqli_fetch_array( $rest ) ){ 
+                  echo
+                  "
+                <div class='item'>
+                  <img src='images/sliders/{$row["image"]}'  width='320' height='120'>
+                  <div class='carousel-caption'>
+                    <p>PCI Wonderful Mum Skills Acquisition Training Programme.</p>
                   </div>
-                </div>
-
-                <div class="item">
+                </div> \n";
+                  }
+                ?>
+                
+                 <div class="item active">
                   <img src="images/hom2.jpg" alt="tunnel" width="320" height="120">
                   <div class="carousel-caption">
-                    <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+                    <p>PCI Wonderful Mum Skills Acquisition Training Programme.</p>
                   </div>
                 </div>
-              
+              <!--
                 <div class="item">
                   <img src="images/hom3.jpg" alt="bag" width="320" height="120">
                   <div class="carousel-caption">
-                    <p>Beatiful flowers in Kolymbari, Crete.</p>
+                    <p>PCI Wonderful Mum Graduation Ceremony.</p>
                   </div>
                 </div>
 
                 <div class="item">
                   <img src="images/hom4.jpg" alt="Taloring" width="320" height="120">
                   <div class="carousel-caption">
-                    <p>Beatiful flowers in Kolymbari, Crete.</p>
+                    <p>PCI Wonderful Mum Graduation Ceremony.</p>
                   </div>
                 </div>
 
                 <div class="item">
                   <img src="images/hom5.jpg" alt="Taloring" width="320" height="120">
                   <div class="carousel-caption">
-                    <p>Beatiful flowers in Kolymbari, Crete.</p>
+                    <p>PCI Wonderful Mum Graduation Ceremony.</p>
                   </div>
                 </div>
 
                 <div class="item">
                   <img src="images/hom6.jpg" alt="Taloring" width="320" height="120">
                   <div class="carousel-caption">
-                    <p>Beatiful flowers in Kolymbari, Crete.</p>
+                    <p>PCI Wonderful Mum Graduation Ceremony.</p>
                   </div>
                 </div>
-            
+            -->
               </div>
-
+ 
               <!-- Left and right controls -->
               <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -312,33 +286,34 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
-          </div><br><br>
+          </div><br>
           <!-- End of slider carousel -->
-          <div class="row">
-            <div class="col-md-4">
-              <div class="profile-sidebar">
-                
-              </div>              
+          <div class="well">
+            <div class="row">
+              <div class="col-md">
+                <div class="col-md-9">
+                  <video  controls class="img-responsive" style="height: 280px; width: auto;">
+                    <source src="videos/makeup.mp4" type="video/mp4">
+                    <source src="videos/makeup.ogg" type="video/ogg">
+                    Your browser does not support the video tag.
+                  </video> 
+                </div>
+                <div class="col-md-3">
+                  <p style="font-family: sans-serif; color: #ff8c00; "> Make-up Training</p>
+                </div>
+              </div>            
             </div>
+          
 
-            <div class="col-md-4">
-              <div class="profile-sidebar">
-                
-              </div>              
-            </div>
-
-            <div class="col-md-4">
-              <div class="profile-sidebar">
-                
-              </div>              
-            </div>
+           
 
           </div>
         </div>
       </div>
     </div>
 
-
+    <?php include ('footer.html');
+    ?>
     <!-- end of container -->
     </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

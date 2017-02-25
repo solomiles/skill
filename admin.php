@@ -5,6 +5,7 @@
   $title = 'Admin | PECULIAR CONCEPTS INTERNATIONAL';
   $saved = "";
   $error = false;
+  $today_date = date('D, M Y');
  // if session is not set this will redirect to login page
  if($_SESSION['admin']=="" ) {
   header("Location: pci-admin.php");
@@ -31,8 +32,9 @@
     
     }
   }
-
+  #code to fetch users
   $rest = db_query("SELECT * FROM users ");
+  $result = db_query("SELECT * FROM courses");
   
 
   if (isset($_POST['btn-send'])) {
@@ -54,16 +56,16 @@
        $saved = "Please select a course.";
       } 
 
-      if (empty($amount)) {
+      elseif (empty($amount)) {
        $error = true;
        $saved = "Please set amount.";
       } 
 
-      if (empty($date)) {
+      elseif (empty($date)) {
        $error = true;
        $saved = "Please set date.";
       } 
-
+      else {
       $result = db_query("UPDATE courses SET Name = '$courses', Amount = '$amount', Dates = '$date' WHERE Name = '$courses'");
       // ("INSERT INTO courses(Name,Amount,Dates) VALUES('$courses','$amount','$date')");
 
@@ -81,6 +83,47 @@
       }
 
     }
+  }
+
+    if(isset($_POST['Submit'])){
+        // $id = $_SESSION['admin'];
+        $name = $_FILES["image"] ["name"];
+
+        $type = $_FILES["image"] ["type"];
+        $size = $_FILES["image"] ["size"];
+        $temp = $_FILES["image"] ["tmp_name"];
+        $error = $_FILES["image"] ["error"];
+        $path = 'images/sliders/'. $name;
+
+
+       
+
+        if (!$name){
+          $saved = "Error uploading file! No file selected.Please Select a file";
+        }else{
+            if($size > 100000) //conditions for the file
+            {
+              $saved = "Format is not allowed or file size is too big!";
+            }
+            else
+            {
+            move_uploaded_file($temp, $path);
+
+            $result =  db_query("INSERT INTO slider(image) VALUES ('$name') ");
+
+            if ($result === true) {
+              # code...
+              $saved = 'saved Successfully';
+            } else{
+
+              $saved = 'Unsuccessful';
+            }
+
+            }
+            
+        }
+          
+      }
 
 
 
@@ -104,6 +147,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"> -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- css for data table -->
+    <link href="assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" >
+    <!-- css for file upload -->
+    <link rel="stylesheet" href="assets/css/bootstrap-fileupload.min.css" >
+    <!-- css for date picker -->
+    <link rel="stylesheet" href="assets/plugins/datepicker/css/datepicker.css" >
+    <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker-bs3.css" >
     <!-- main css for friendzone -->
     <!-- <link href="css/solomonproject.min.css" rel="stylesheet" type="text/css"> -->
     
@@ -151,9 +201,9 @@
     </style>
    
   </head>
-  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; margin-top: 25px;">
-    <header>
-      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width="">
+  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; ">
+    <header id="topofpage">
+      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width=""><span class="btn-success" style="margin-left: 10px;"><?php echo $today_date; ?></span>
     </header>
     <nav class="navbar navbar-default">
       <div class="container">
@@ -189,7 +239,7 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" style="font-size: 17px;">
-              <li class="active"><a href="#" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li>              
+              <li class=""><a href="#" data-toggle="tooltip" data-placement='bottom' title="Contact Us">Contact Us</a></li>              
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><?php echo $id; ?><span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -203,130 +253,138 @@
     </nav>
 
     <div class="row">
-      <div class="col-md-12">
-            <!-- side navigation -->
-        <div class="col-md-3">
-          <div class="profile-sidebar">
-            <h4>PCI Wonderfull Mum</h4><hr>
-            <nav>
-            <ul class="nav">
-              <li class="dropdown"><a href="index.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="about-us.php">About us</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Profile</a></li>
-              <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
-              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill Acquisition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="courses.php" data-toggle="tooltip" data-placement='bottom' title="Courses"><span class="glyphicon glyphicon-book"></span> Courses</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="course_outline.php" data-toggle="tooltip" data-placement='bottom' title="Course Outline">Course Outline</a></li>
-                </ul>
-              </li>
-              <li class="active" style="background: rgb(233, 239, 236) none repeat scroll 0% 0%;"><a href="#">Contact Us</a></li>
-              <!-- <li><a href="#">Skin Care</a></li>
-              <li><a href="#">Taloring</a></li>
-              <li><a href="#">Hat Making</a></li>
-              <li><a href="#">Catering</a></li>
-              <li><a href="#">Events Management And Decoration</a></li> -->
-            </ul></nav>
-          </div>
-        </div>
+      <div class="">
+
         <!-- contact form -->
-        <div class="col-md-9 col-sm-9">
+        <div class="col-md-12 col-sm-12">
           <div class="col-md-12">
             <div class="well">
               <h3>Peculiar Concepts ADMIN Page</h3>
-              <div class="alert alert-danger alert-dismissable">WARNING!!! Please Make Sure You Understand What you Are About To Do<?php echo $saved; ?></div><hr>
-              
-                <div class="">
-                  <h5><strong>Edit Courses</strong></h5>
-                </div><br>
-                <p class="alert-success"><?php echo $saved; ?></p>
-                
-                <form class="form-horizontal" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="upload" method="post">
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label">Select Course:</label>
-                    <div class="col-lg-8">
-                      <select name="courses" class="form-control">
-                        <option></option>
-                        <option value="Tailoring">Tailoring</option>
-                        <option value="Bridal Makeover">Bridal Makeover</option>
-                        <option value="Ankara Craft">Ankara Craft</option>    
-                        <option value="Soap Making">Soap Making</option>
-                        <option value="Bead Making">Bead Making</option>
-                        <option value="Paint Production">Paint Production</option>
-                        <option value="Skin Care">Skin Care</option>
-                        <option value="Hat Making">Hat Making</option>
-                        <option value="Catering">Catering</option>
-                        <option value="Events Management And Decoration">Events Management And Decoration</option>
-                      </select>
-                    </div>
+              <div class="alert alert-danger alert-dismissable">WARNING!!! Please Make Sure You Understand What you Are About To Do <?php echo $saved; ?></div><hr>
+                <div class="row"> <!-- start of to edit courses -->
+                  <div class="col-md-6 col-sm-6">  
+                    <div class="">
+                      <h5><strong>Edit Courses</strong></h5>
+                    </div><br>
+                    <p class="alert-success"><?php echo $saved; ?></p>
+                    
+                    <form class="form-horizontal" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="upload" method="post">
+                      <div class="form-group">
+                        <label class="col-lg-3 control-label">Select Course:</label>
+                        <div class="col-lg-9">
+                          <select name="courses" class="form-control" placeholder="Select course" >
+                            <option></option>
+                            <?php while ( $row = mysqli_fetch_array($result)) {
+                              # code...
+                            echo "
+                            <option>{$row['Name']}</option>
+                            \n";
+                          }
+                            ?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-3 control-label">Set amount:</label>
+                        <div class="col-lg-9">
+                          <input class="form-control" type="text" name="amount" placeholder="set amount" >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-3 control-label">Set Date:</label>
+                        <div class="hero-unit col-lg-9 ">
+                          <input class="form-control" id="example1" name="date" placeholder="eg: 04,feb - 10,feb 2017" type="text" >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-9">
+                          <button type="submit" name="btn-send" class="btn btn-primary btn-md">Save</button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label">Set amount:</label>
-                    <div class="col-lg-8">
-                      <input class="form-control" type="text" name="amount" placeholder="set amount" >
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label">Set Date:</label>
-                    <div class="hero-unit col-lg-8 ">
-                      <input class="form-control" id="example1" name="date" type="text" >
-                    </div>
-                  </div>
-                  <!-- <div class="form-group">
-                    <label class="col-lg-3 control-label">Message:</label>
-                    <div class="col-lg-8">
-                      <textarea class="form-control" type="text" name="message">  </textarea>
-                    </div>
-                  </div> -->
-                  <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-                    <div class="col-md-8">
-                      <button type="submit" name="btn-send" class="btn btn-primary btn-lg">Save</button>
-                    </div>
-                  </div>
-                </form>
+                </div> <!-- end of edit course -->
                 <br>
+                <div class="row"> <!-- start of edit upcoming events -->
+                  <div class="col-md-6 col-sm-6">
+                    <div class="well">
+                      <h5><strong>Add Upcoming Events</strong></h5>
+                      <p class="alert-warning">photo size of not more than 500kb!!!</p><br>
+                      <form enctype='multipart/form-data' role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
+                        <div class="form-group">
+                          <label class="col-md-6 control-label">Upload posters/fliers :</label>
+                          <div class="col-md-6">
+                            <!-- <input type="file" class="form-control" name="image"> -->
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
+                                <div>
+                                  <span class="btn btn-file btn-success"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="image"></span>
+                                  <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-6 control-label"></label>
+                          <div class="col-md-6">
+                            <button type="submit" value="submit" class="btn btn-primary" name="Submit">Upload</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
 
                 <!-- table to display list of active users -->
                 
                   <h3><u>List of registered users and details</u></h3><br>
                   <div class="row">
-                    <div class="col-sm-12 well">
-                    <table class="table table-responsive table-bordered table-striped table-condensed">
-                      <thead>
-                        <tr>
-                          <th>s/n</th>
-                          <th>Username</th>
-                          <th>Fullname</th>
-                          <th>Email</th>
-                          <th>Gender</th>
-                          <th>State</th>
-                          <th>Country</th>
-                          <th>Phone</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php $count=0;
-                          while( $row = mysqli_fetch_array( $rest ) ){ $count++;
-                            echo
-                            "<tr>
-                              <td>$count</td>
-                              <td>{$row['Username']}</td>
-                              <td>{$row['Name']}</td>
-                              <td>{$row['Email']}</td>
-                              <td>{$row['Gender']}</td>
-                              <td>{$row['Description']}</td>
-                              <td>{$row['Country']}</td>
-                              <td>{$row['Phone']}</td>
-                            </tr>\n";
-                          }
-                        ?>
-                      </tbody>
-                    </table>
+                    <div class="col-sm-12">
+                    <div  class="panel panel-success"> 
+                    <!--table to display users -->
+                    <div class="panel-heading">
+                      DataTable Displaying Users
+                    </div>
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <table class="table table-responsive table-hover table-bordered table-striped table-condensed" id="dataTables-example">
+                          <thead>
+                            <tr>
+                              <th>s/n</th>
+                              <th>Username</th>
+                              <th>Fullname</th>
+                              <th>Email</th>
+                              <th>Gender</th>
+                              <th>State</th>
+                              <th>Country</th>
+                              <th>Phone</th>
+                              <th>Date Registered</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php $count=0;
+                              while( $row = mysqli_fetch_array( $rest ) ){ $count++;
+                                echo
+                                "<tr >
+                                  <td>$count</td>
+                                  <td>{$row['Username']}</td>
+                                  <td>{$row['Name']}</td>
+                                  <td>{$row['Email']}</td>
+                                  <td>{$row['Gender']}</td>
+                                  <td>{$row['Description']}</td>
+                                  <td>{$row['Country']}</td>
+                                  <td>{$row['Phone']}</td>
+                                  <td>{$row['Dateregister']}</td>
+                                </tr>\n";
+                              }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    </div> <!-- end of table table to users -->
                   </div>
                 </div>
               </div>
@@ -335,12 +393,27 @@
         </div>
       </div>
 
-
+        <?php include ('footer.html');
+      ?>
     <!-- end of container -->
     </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- js for file upload -->
+    <script src="assets/plugins/jasny/js/bootstrap-fileupload.js"></script>
+    <!-- js for date picker -->
+    <script src="assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="assets/plugins/daterangepicker/moment.min.js"></script>
+    <!-- js for data table -->
+    <script src="assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script>
+       $(document).ready(function () {
+           $('#dataTables-example').dataTable();
+       });
+    </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/friendzone.js"></script>`

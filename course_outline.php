@@ -3,6 +3,7 @@
  session_start();
  include_once 'dbconnect.php';
   $title = 'Course-outline | PECULIAR CONCEPTS INTERNATIONAL';
+  $today_date = date('D, M Y');
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
   header("Location: index.php");
@@ -134,9 +135,9 @@
     </style>
    
   </head>
-  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; margin-top: 5px;">
-    <header>
-      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width="">
+  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; ">
+    <header id="topofpage">
+      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width=""><span class="btn-success" style="margin-left: 10px;"><?php echo $today_date; ?></span>
     </header>
     <nav class="navbar navbar-default">
       <div class="container">
@@ -149,7 +150,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
+            <a class="navbar-brand" href="index.php" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -167,7 +168,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="courses.php" data-toggle="tooltip" data-placement='bottom' title="Courses"><span class="glyphicon glyphicon-book"></span> Courses</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Course Outline">Course Outline</a></li>
+                  <li><a href="" data-toggle="tooltip" data-placement='bottom' title="Course Outline">Course Outline</a></li>
                 </ul>
               </li>
             </ul>
@@ -452,13 +453,15 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div><br><br><br><br><br><br>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+      <?php include ('footer.html');
+      ?>
 
     <!-- end of container -->
     </div>

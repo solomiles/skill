@@ -2,8 +2,9 @@
  ob_start();
  session_start();
  include_once 'dbconnect.php';
-  $title = 'Profile | PECULIAR CONCEPTS INTERNATIONAL SKILL ACQUISITION';
+  $title = 'Profile | PECULIAR CONCEPTS INTERNATIONAL SKILL ACQUISITION TRAINING PROGRAMME';
   $delivery = "";
+  $today_date = date('D, M Y');
  // if session is not set this will redirect to login page
  if($_SESSION['user']=="" ) {
   header("Location: index.php");
@@ -90,6 +91,7 @@ $row = mysqli_fetch_array($result);
 
 $display = $row['Profilepic'];
 
+
 if(isset($_POST['Submit'])){
         $id = $_SESSION['user'];
         $name = $_FILES["image"] ["name"];
@@ -103,11 +105,11 @@ if(isset($_POST['Submit'])){
        
 
         if ($error > 0){
-            die("Error uploading file! Code $error.");
+          $errMSG = "Error uploading file! No file selected.";
         }else{
-            if($size > 1000000) //conditions for the file
+            if($size > 100000) //conditions for the file
             {
-            die("Format is not allowed or file size is too big!");
+              $errMSG = "Format is not allowed or file size is too big!";
             }
             else
             {
@@ -204,9 +206,9 @@ if(isset($_POST['Submit'])){
     </style>
    
   </head>
-  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%; margin-top: 5px;">
-    <header>
-      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width="">
+  <body><div class="container" style="background: rgba(218, 216, 215, 0.78) none repeat scroll 0% 0%;">
+    <header id="topofpage">
+      <img src="images/skill102.jpg" class="img-rounded img-responsive" height="100" width=""><span class="btn-success" style="margin-left: 10px;"><?php echo $today_date; ?></span>
     </header>
     <nav class="navbar navbar-default">
       <div class="container">
@@ -219,7 +221,7 @@ if(isset($_POST['Submit'])){
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
+            <a class="navbar-brand" href="index.php" data-toggle="tooltip" data-placement='bottom'  title="WELCOME">WELCOME</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -230,7 +232,7 @@ if(isset($_POST['Submit'])){
                   <li><a href="about-us.php" data-toggle="tooltip" data-placement='bottom' title="About Us">About Us</a></li>
                 </ul>
               </li>
-              <li class="active"><a href="#" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
+              <li class="active"><a href="" data-toggle="tooltip" data-placement='bottom' title="Profile">Profile</a></li>
               <li><a href="#" data-toggle="tooltip" data-placement='bottom' title="Tutorials">Tutorials</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skill Aquisition<span class="caret"></span></a>
@@ -371,12 +373,14 @@ if(isset($_POST['Submit'])){
       </div>
     </div>
 
+      <?php include ('footer.html');
+      ?>
 
     <!-- end of container -->
     </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <!-- <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script> -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.js"></script>
